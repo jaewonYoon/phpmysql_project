@@ -34,7 +34,7 @@
 		<div class="container">
 			<a href="#" class="brand-logo brand-text"> shop </a>
 			<ul id = "nav-mobile" class="right hide-on-small-and-down">
-				<li><a href="add.php" class="btn brand z-depth-0">Add a material</a></li>
+				<li><a href="login.php" class="btn brand z-depth-0">SignIn</a></li>
 			</ul>
 		</div>
 	</nav>

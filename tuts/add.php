@@ -1,23 +1,9 @@
 <?php
 include('config/db_connect.php');
-$errors = array('email'=> '', 'name'=> '', 'price' => '');
-$name = $email = $price = '';
+$errors = array('name'=> '', 'price' => '');
+$name = $price = '';
 if(isset($_POST['submit'])){
-    // echo htmlspecialchars($_POST['email']);
-    // echo htmlspecialchars($_POST['title']);
-    // echo htmlspecialchars($_POST['price']);
     
-    //check email
-    if(empty($_POST['email'])){
-        $errors['email']= 'email must be a valid email address <br/>';
-    } else{
-        $email = $_POST['email'];
-        if(!filter_var($email,FILTER_VALIDATE_EMAIL)){
-           $errors['email']= 'email must be a valid email address';
-        }
-        echo htmlspecialchars($_POST['email']) . '<br/>';
-    }
-
     //check price
     if(empty($_POST['price'])){
         $errors['price']= 'A price is required! <br/>';
@@ -71,9 +57,6 @@ if(isset($_POST['submit'])){
 <section class = "container grey-text">
     <h4 class="center">Add a item</h4>
     <form class = "white" action="add.php" method="POST">
-        <label>Your Email: </label>
-        <input type="text" name="email" value="<?php echo $email ?>">
-        <div class="red-text"><?php echo $errors['email']; ?></div>
         <label>Item name: </label>
         <input type="text" name="name" value="<?php echo $name ?>">
         <div class="red-text"><?php echo $errors['name']; ?></div>

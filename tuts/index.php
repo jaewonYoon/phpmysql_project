@@ -1,8 +1,18 @@
 <?php 
+    //login 확인 
+    session_start();
+    if(!isset($_SESSION['userid']))
+    {
+        header('Location: ./login.html');
+    }
+    echo "홈 로그인 성공"; 
+    echo '<a href="logout.php">로그아웃</a>';
+    
     include('config/db_connect.php');
+    include('config/random_img.php');
     // write query for all items
     $sql = 'SELECT name, product_id, price FROM product ORDER BY product_id';
-
+    
     $result = mysqli_query($conn, $sql);
     
     // fetch the resulting rows as an array 
@@ -28,14 +38,15 @@
             <?php foreach($items as $item): ?> 
                 <div class="col s6 md3"> 
                     <div class="card z-depth-0">
+                        <img src="img/<?php echo random_img();?>" class="item"/> 
                         <div class="card-content center">
                             <h6><?php echo htmlspecialchars($item['name']);?></h6>
                             <div><?php echo htmlspecialchars($item['price']);?></div>
                         </div> 
                         <div class="card-action right-align">
-                            <a class="brand-text" href="details.php?id=<?php echo $item['id']?>">
+                            <a class="brand-text" href="details.php?id=<?php echo $item['product_id']?>">
                             more info </a> 
-                        </div> 
+                        </div>  
                      </div>
                 </div>
             <?php endforeach; ?> 
