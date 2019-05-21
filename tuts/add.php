@@ -1,10 +1,11 @@
 <?php
-$errors = array('email'=> '', 'title'=> '', 'ingredients' => '');
-$title = $email = $ingredients = '';
+include('config/db_connect.php');
+$errors = array('email'=> '', 'name'=> '', 'price' => '');
+$name = $email = $price = '';
 if(isset($_POST['submit'])){
     // echo htmlspecialchars($_POST['email']);
     // echo htmlspecialchars($_POST['title']);
-    // echo htmlspecialchars($_POST['ingredients']);
+    // echo htmlspecialchars($_POST['price']);
     
     //check email
     if(empty($_POST['email'])){
@@ -17,32 +18,46 @@ if(isset($_POST['submit'])){
         echo htmlspecialchars($_POST['email']) . '<br/>';
     }
 
-    //check ingredients
-    if(empty($_POST['ingredients'])){
-        $errors['ingredients']= 'An ingredients is required! <br/>';
+    //check price
+    if(empty($_POST['price'])){
+        $errors['price']= 'A price is required! <br/>';
     } else{
-        $ingredients = $_POST['ingredients'];
-        if(!preg_match('/^([a-zA-z]+)(,\$*[a-zA-Z\s]*)*$/', $ingredients)){
-            $errors['ingredients']= 'Ingredient must be a comma seperated list';
-            }
-        echo htmlspecialchars($_POST['ingredients']);
+        $price = $_POST['price'];
+        // if(!preg_match('/^([a-zA-z]+)(,\$*[a-zA-Z\s]*)*$/', $price)){
+        //     $errors['price']= 'price must be a comma seperated list';
+        //     }
+        echo htmlspecialchars($_POST['price']);
     }
 
-    //check title
-    if(empty($_POST['title'])){
-        $errors['title']= 'An title is required! <br/>';
+    //check name
+    if(empty($_POST['name'])){
+        $errors['name']= 'An name is required! <br/>';
     } else{
-        $title = $_POST['title']; 
-        if(!preg_match('/^[a-zA-z]+$/', $title)){
-            $errors['title']= 'Title must be letters and spaces only';
-        }
-        echo htmlspecialchars($_POST['email']);
+        $name = $_POST['name']; 
+        // if(!preg_match('/^[a-zA-z]+$/', $name)){
+        //     $errors['name']= 'name must be letters and spaces only';
+        // }
+        echo htmlspecialchars($_POST['name']);
     }
     //not empty? it returns true
     if(array_filter($errors)){
         echo 'errors in the form';
     }else{
-        header('Location: index.php');
+        $email = mysqli_real_escape_string($conn, $_POST['email']);
+        $name= mysqli_real_escape_string($conn, $_POST['name']);
+        $price = mysqli_real_escape_string($conn, $_POST['price']); 
+        //create sql 
+        $sqli = "INSERT INTO product(name,price) VALUES ('$name',
+        '$price')"; 
+        //save and check 
+        if(mysqli_query($conn,$sqli)){
+            //success 
+            header('Location: index.php');
+        }else {
+            echo 'query error: ' . mysqli_error($conn); 
+        }
+        
+
     }
 }
 ?> 
@@ -59,12 +74,12 @@ if(isset($_POST['submit'])){
         <label>Your Email: </label>
         <input type="text" name="email" value="<?php echo $email ?>">
         <div class="red-text"><?php echo $errors['email']; ?></div>
-        <label>Item title: </label>
-        <input type="text" name="title" value="<?php echo $title ?>">
-        <div class="red-text"><?php echo $errors['title']; ?></div>
-        <label>Ingredients (comma separated): </label>
-        <input type="text" name="ingredients" value="<?php echo $ingredients ?>">
-        <div class="red-text"><?php echo $errors['ingredients']; ?></div>
+        <label>Item name: </label>
+        <input type="text" name="name" value="<?php echo $name ?>">
+        <div class="red-text"><?php echo $errors['name']; ?></div>
+        <label>Price (comma separated): </label>
+        <input type="text" name="price" value="<?php echo $price ?>">
+        <div class="red-text"><?php echo $errors['price']; ?></div>
         <div class="center">
             <input type="submit" name="submit" value="submit" class="btn brand
             z-depth-0">

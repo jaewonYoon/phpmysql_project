@@ -1,11 +1,5 @@
 <?php 
-    //connect to database
-    $conn = mysqli_connect('localhost', 'jaewon', '1234','jaewon_items');
-    //check connection 
-    if(!$conn){
-        echo 'Connection error:' . mysqli_connect_error();
-    }
-    
+    include('config/db_connect.php');
     // write query for all items
     $sql = 'SELECT name, product_id, price FROM product ORDER BY product_id';
 
@@ -19,7 +13,7 @@
     ///close connection
     mysqli_close($conn);
 
-    // print_r($items); 
+    // print_r(explode(',', $items[0][price]));
 
 ?>
 
@@ -31,7 +25,7 @@
     <h4 class="center grey-text">Product</h4>
     <div class="container"> 
         <div class="row">
-            <?php foreach($items as $item){ ?> 
+            <?php foreach($items as $item): ?> 
                 <div class="col s6 md3"> 
                     <div class="card z-depth-0">
                         <div class="card-content center">
@@ -39,11 +33,17 @@
                             <div><?php echo htmlspecialchars($item['price']);?></div>
                         </div> 
                         <div class="card-action right-align">
-                            <a class="brand-text" href="#">more info </a> 
+                            <a class="brand-text" href="details.php?id=<?php echo $item['id']?>">
+                            more info </a> 
                         </div> 
                      </div>
                 </div>
-            <?php } ?> 
+            <?php endforeach; ?> 
+            <?php if(count($items)>=3): ?>
+                <p>there are 3 or more products </p>
+            <?php  else :  ?>
+                <p> there are less the 3 products </p>
+            <?php endif ?>
         </div>
     </div>
     <?php include('templates/footer.php'); ?>
