@@ -65,7 +65,7 @@ if(isset($_POST['submit'])){
     <h4 class="center">Login</h4>
     <form class = "white" action="login.php" method="POST">
         <label>name: </label>
-        <input placeholder="Your id is eqult with your name" type="text" name="name" value="<?php echo $name ?>">
+        <input placeholder="Your id is equal with your name" type="text" name="name" value="<?php echo $name ?>">
         <div class="red-text"><?php echo $errors['name']; ?></div>
         <label>password</label>
         <input placeholder="password" type="password" name="password" value="<?php echo $password ?>">
