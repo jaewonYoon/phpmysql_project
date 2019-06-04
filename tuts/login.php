@@ -1,6 +1,11 @@
 <?php
+include('config/db_connect.php');
 
-$errors = ["name"=> "", "password" => "" ];
+$errors = [
+    "name"=> "", 
+    "password" => "",
+    "duplicate" => ""
+];
 $name = $password ="";
 
 if(isset($_POST['submit'])){
@@ -26,31 +31,31 @@ if(isset($_POST['submit'])){
         // }
         echo htmlspecialchars($_POST['name']);
     }
+    //에러가 있다면 echo, 없으면 add.phps로 이동 
     if(array_filter($errors)){
         echo 'errors in the form';
     } else{
-        header('Location: ./add.php');
-    }   
-    //not empty? it returns true
-    // if(array_filter($errors)){
-    //     echo 'errors in the form';
-    // }else{
-    //     $email = mysqli_real_escape_string($conn, $_POST['email']);
-    //     $name= mysqli_real_escape_string($conn, $_POST['name']);
-    //     $password = mysqli_real_escape_string($conn, $_POST['password']); 
-    //     //create sql 
-    //     $sqli = "INSERT INTO product(name,price) VALUES ('$name',
-    //     '$price')"; 
-    //     //save and check 
-    //     if(mysqli_query($conn,$sqli)){
-    //         //success 
-    //         header('Location: index.php');
-    //     }else {
-    //         echo 'query error: ' . mysqli_error($conn); 
-    //     }
+        session_start();
+        $_SESSION['name'] = $_POST['name'];
+        echo $_SESSION['name']; 
+        //다시 쿼리를 짜보자 
+        $name= mysqli_real_escape_string($conn, $_POST['name']);
+        //create sql 
+        $sql = "SELECT id from admin where id = (select id from person where name = '$name')";
         
-
-    // }
+        $result = mysqli_query($conn, $sql);
+        $items = mysqli_fetch_all($result, MYSQLI_ASSOC); 
+        
+        if(count($items)){
+            echo "something"; 
+            header('Location: ./index.php');
+        }
+        else{
+            echo "nothing"; 
+            header('Location: ./customer_index.php');
+        }
+        // header('Location: index.php');
+    }  
 }
 ?> 
 <!DOCTYPE html>

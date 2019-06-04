@@ -1,6 +1,10 @@
 <?php
+$query  = "SELECT (name,id) from product;";
+$query .= "SELECT cart_id from cart;";
+$query .= "SELECT name from product"; 
 
-
+mysqli_multi_query($conn, $query); 
+$result  = mysqli_last_result($link);
 ?>
 
 

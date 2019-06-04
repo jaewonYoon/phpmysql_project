@@ -9,7 +9,7 @@ if(isset($_POST['delete'])){
     '$name_to_delete'";
     
     if(mysqli_query($conn, $sql)){
-        header('Location: index.php');
+        header('Location: customer_index.php');
     }else{
         //failure
         echo 'query error :'. mysqli_error($conn);
@@ -36,7 +36,7 @@ print_r($item);
 
 //add to cart 
 if(isset($_POST['addcart'])){
-    $id_to_delete = mysqli_real_escape_string($conn,$_POST['addcart']);
+    $addcart = mysqli_real_escape_string($conn,$_POST['addcart']);
     $sql = "ALTER FROM product WHERE name = $name_to_delete";
     if(mysqli_query($conn, $sql)){
         header('Location: index.php');
@@ -49,7 +49,7 @@ if(isset($_POST['addcart'])){
 
 <!DOCTYPE html>
 <html lang="en">
-<?php include('templates/header.php');?> 
+<?php include('templates/customer_header.php');?> 
 
 <div class="container center grey-text">
     <?php if($item): ?>

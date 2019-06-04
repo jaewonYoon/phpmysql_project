@@ -1,3 +1,17 @@
+<?php 
+
+session_start(); 
+//www.123.com?noname 
+if($_SERVER['QUERY_STRING'] == 'noname'){
+	unset($_SESSION['name']);
+	header('Location: ./login.php');
+	//session_unset();
+}
+//둘 중의 하나 Null coalescing operator 
+$name= $_SESSION['name'] ?? 'Guest';
+
+?>
+
 <head>
 	<title>New project</title>
 	<!-- Compiled and minified CSS -->
@@ -32,10 +46,23 @@
 <body class="grey lighten-4">
 	<nav class="white z-depth-0">
 		<div class="container">
-			<a href="#" class="brand-logo brand-text"> shop </a>
+			<a href="index.php" class="brand-logo brand-text"> ACE shop </a>
+			
 			<ul id = "nav-mobile" class="right hide-on-small-and-down">
+	
+				<li class="grey-text">Hello <?php echo htmlspecialchars($name) ?> </li>
 				<li><a href="add.php" class="btn brand z-depth-0">Add a material</a></li>
+				<!-- <form action="login.php" method="post">
+				<button name ="logout" class="btn brand z-depth-0"
+				>logout</button>
+				</form> -->
+				
 			</ul>
+			
+			<!-- <li>
+				<button class="btn brand z-depth-0" name="signout">Signout</button>
+				</li> -->
 		</div>
+		
 	</nav>
-
+	

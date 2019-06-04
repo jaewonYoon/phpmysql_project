@@ -1,7 +1,7 @@
 <?php
 include('config/db_connect.php');
 $errors = array('name'=> '', 'price' => '');
-$name = $price = '';
+$name = $price = $dday='';
 if(isset($_POST['submit'])){
     
     //check price
@@ -63,6 +63,7 @@ if(isset($_POST['submit'])){
         <label>Price (comma separated): </label>
         <input type="text" name="price" value="<?php echo $price ?>">
         <div class="red-text"><?php echo $errors['price']; ?></div>
+        
         <div class="center">
             <input type="submit" name="submit" value="submit" class="btn brand
             z-depth-0">
