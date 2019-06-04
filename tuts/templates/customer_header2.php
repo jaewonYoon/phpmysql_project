@@ -48,7 +48,7 @@ $name= $_SESSION['name'] ?? 'Guest';
 	<nav class="white z-depth-0">
 		<div class="container">
 		
-			<a href="index.php" class="brand-logo brand-text"> ACE shop </a>
+			<a href="customer_index.php" class="brand-logo brand-text"> ACE shop </a>
 			
 			<ul id = "nav-mobile" class="right hide-on-small-and-down">
 	
